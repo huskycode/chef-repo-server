@@ -56,3 +56,5 @@ git "#{user_home}/.vim/bundle/nerdtree" do
   repository "https://github.com/scrooloose/nerdtree.git"
   reference "master"
 end
+
+# Servers 

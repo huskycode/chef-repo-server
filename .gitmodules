@@ -1,0 +1,18 @@
+[submodule "site-cookbooks/jetty"]
+	path = site-cookbooks/jetty
+	url = https://github.com/opscode-cookbooks/jetty
+[submodule "site-cookbooks/java"]
+	path = site-cookbooks/java
+	url = https://github.com/opscode-cookbooks/java
+[submodule "site-cookbooks/windows"]
+	path = site-cookbooks/windows
+	url = https://github.com/opscode-cookbooks/windows
+[submodule "site-cookbooks/chef_handler"]
+	path = site-cookbooks/chef_handler
+	url = https://github.com/opscode-cookbooks/chef_handler
+[submodule "site-cookbooks/jpackage"]
+	path = site-cookbooks/jpackage
+	url = https://github.com/opscode-cookbooks/jpackage
+[submodule "site-cookbooks/openssl"]
+	path = site-cookbooks/openssl
+	url = https://github.com/opscode-cookbooks/openssl

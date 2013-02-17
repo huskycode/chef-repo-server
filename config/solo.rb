@@ -1,6 +1,6 @@
 root_path = File.expand_path(File.join(File.dirname(__FILE__), '..'))
  
-cookbook_path   File.join(root_path, 'cookbooks')
+cookbook_path   [File.join(root_path, 'cookbooks'), File.join(root_path, 'site-cookbooks')]
 role_path       File.join(root_path, 'roles')
  
 state_root_path = File.expand_path("#{root_path}/.chef/state")
