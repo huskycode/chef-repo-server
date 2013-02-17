@@ -12,7 +12,9 @@ package "openssh-server"
 
 user username do
   gid "sudo"
+  shell "/bin/bash"
   home "/home/#{username}"
   password password
+  supports :manage_home => true
 end
  
