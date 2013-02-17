@@ -57,4 +57,22 @@ git "#{user_home}/.vim/bundle/nerdtree" do
   reference "master"
 end
 
-# Servers 
+#Deployments
+remote_file "Jenkins" do
+  path "#{node["jetty"]["webapp_dir"]}/jenkins.war"
+  source "http://mirrors.jenkins-ci.org/war/latest/jenkins.war"
+  owner node["jetty"]["user"] 
+  group node["jetty"]["group"] 
+  action :create_if_missing
+end
+
+directory "/home/jetty" do
+  owner node["jetty"]["user"]
+  group node["jetty"]["group"]
+  action :create
+  recursive true
+end
+
+service "jetty" do
+  action :restart
+end
