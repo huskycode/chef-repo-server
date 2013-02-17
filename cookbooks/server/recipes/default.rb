@@ -74,5 +74,5 @@ directory "/home/jetty" do
 end
 
 service "jetty" do
-  action :restart
+  action :reload
 end
