@@ -16,3 +16,18 @@
 [submodule "site-cookbooks/openssl"]
 	path = site-cookbooks/openssl
 	url = https://github.com/opscode-cookbooks/openssl
+[submodule "site-cookbooks/nginx"]
+	path = site-cookbooks/nginx
+	url = https://github.com/opscode-cookbooks/nginx
+[submodule "site-cookbooks/apt"]
+	path = site-cookbooks/apt
+	url = https://github.com/opscode-cookbooks/apt
+[submodule "site-cookbooks/build-essential"]
+	path = site-cookbooks/build-essential
+	url = https://github.com/opscode-cookbooks/build-essential
+[submodule "site-cookbooks/ohai"]
+	path = site-cookbooks/ohai
+	url = https://github.com/opscode-cookbooks/ohai
+[submodule "site-cookbooks/yum"]
+	path = site-cookbooks/yum
+	url = https://github.com/opscode-cookbooks/yum
