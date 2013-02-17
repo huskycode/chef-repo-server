@@ -1,1 +1,1 @@
-sudo chef-solo -c config/solo.rb -j config/default.json $*
+sudo chef-solo -c `pwd`/config/solo.rb -j config/default.json $*
