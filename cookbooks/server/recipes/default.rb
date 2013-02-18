@@ -106,5 +106,18 @@ nginx_site 'huskycode' do
   enable true 
 end
 
+#Proxy
+template "/etc/haproxy/haproxy.cfg" do
+  source "haproxy.cfg.erb"
+  owner "root"
+  group "root"
+  mode 00644
+  variables({
+    :http_server_port => 81
+  })
+  notifies :reload, "service[haproxy]"
+end
+
+
 # DO UFW Here !!
 
