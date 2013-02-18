@@ -3,6 +3,7 @@
        "recipe[nginx]" 
       ,"recipe[jetty]"
       ,"recipe[haproxy]"
+      ,"recipe[ufw]"
       ,"recipe[server]"
     ]
 }
