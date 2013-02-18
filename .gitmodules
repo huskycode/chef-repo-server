@@ -31,3 +31,9 @@
 [submodule "site-cookbooks/yum"]
 	path = site-cookbooks/yum
 	url = https://github.com/opscode-cookbooks/yum
+[submodule "site-cookbooks/haproxy"]
+	path = site-cookbooks/haproxy
+	url = https://github.com/opscode-cookbooks/haproxy
+[submodule "site-cookbooks/cpu"]
+	path = site-cookbooks/cpu
+	url = https://github.com/Youscribe/cpu-cookbook.git
