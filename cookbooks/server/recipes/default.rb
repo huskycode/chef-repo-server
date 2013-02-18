@@ -64,6 +64,7 @@ remote_file "Jenkins" do
   owner node["jetty"]["user"] 
   group node["jetty"]["group"] 
   action :create_if_missing
+  notifies :reload, 'service[jetty]'
 end
 
 directory "/home/jetty" do
@@ -71,10 +72,6 @@ directory "/home/jetty" do
   group node["jetty"]["group"]
   action :create
   recursive true
-end
-
-service "jetty" do
-  action :reload
 end
 
 #Huskycode
