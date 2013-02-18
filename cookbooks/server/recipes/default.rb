@@ -26,6 +26,26 @@ group "#{uploader_group}" do
   members "#{username}"
 end
 
+directory "#{user_home}/.ssh" do
+  owner username
+  group group
+  action :create
+  recursive true
+end
+
+cookbook_file "files/default/id_rsa" do
+  owner username
+  group group
+  path "#{user_home}/.ssh/id_rsa"
+  action :create
+end
+
+cookbook_file "files/default/id_rsa.pub" do
+  owner username
+  group group
+  path "#{user_home}/.ssh/id_rsa"
+  action :create
+end
 # Vim
 package "vim"
 
