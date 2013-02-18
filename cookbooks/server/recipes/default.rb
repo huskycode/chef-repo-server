@@ -159,5 +159,10 @@ git "#{user_home}/foresee" do
   reference "master"
 end
 
+execute "install_foresee" do
+  command "npm install"
+  cwd "#{user_home}/foresee"
+end
+
 # DO UFW Here !!
 
