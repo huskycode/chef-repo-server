@@ -142,7 +142,14 @@ end
 #NodeJs
 apt_repository "nodejs" do
   uri "http://ppa.launchpad.net/chris-lea/node.js/ubuntu/" 
+  distribution node['lsb']['codename']
+  components ["main"]
+  keyserver "keyserver.ubuntu.com"
+  key "C7917B12"
 end
+### TODO MAke this notifies only after successful apt-update
+package "nodejs"
+package "npm"
 
 #Foresee
 git "#{user_home}/foresee" do
