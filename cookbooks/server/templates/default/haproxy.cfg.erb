@@ -25,7 +25,13 @@ defaults
 frontend http
   maxconn 4000
   bind 0.0.0.0:<%= node['haproxy']['incoming_port'] %>
-  default_backend servers-http
+  acl is_jenkins hdr_dom(host) jenkins
+  use_backend jenkins if is_jenkins
+  default_backend huskycode
 
-backend servers-http
-  server localhost 127.0.0.1:<%= @http_server_port %> weight 1 maxconn <%= node['haproxy']['member_max_connections'] %> check
+backend huskycode 
+  server localhost 127.0.0.1:<%= @http_server_port %>
+
+backend jenkins
+  server localhost 127.0.0.1:<%= @jenkins_port %>/jenkins
+

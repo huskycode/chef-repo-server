@@ -113,7 +113,8 @@ template "/etc/haproxy/haproxy.cfg" do
   group "root"
   mode 00644
   variables({
-    :http_server_port => 81
+    :http_server_port => 81,
+    :jenkins_port => 8080
   })
   notifies :reload, "service[haproxy]"
 end
