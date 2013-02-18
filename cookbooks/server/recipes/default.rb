@@ -162,7 +162,30 @@ end
 execute "install_foresee" do
   command "npm install"
   cwd "#{user_home}/foresee"
+  environment ({'HOME' => user_home}) 
+  user username
+  group uploader_group 
 end
 
-# DO UFW Here !!
+#global insatll should be done by root
+execute "install_forever" do
+  command "npm install forever -g"
+  cwd "#{user_home}/foresee"
+  environment ({'HOME' => user_home}) 
+end
 
+execute "stop_all_forever" do
+  command "forever stopall"
+  cwd "#{user_home}/foresee"
+  environment ({'HOME' => user_home}) 
+  user username
+  group uploader_group 
+end
+
+execute "run_forever" do
+  command "forever start app.js"
+  cwd "#{user_home}/foresee"
+  environment ({'HOME' => user_home}) 
+  user username
+  group uploader_group 
+end
