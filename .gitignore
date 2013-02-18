@@ -1,4 +1,2 @@
 *.swp
-cookbooks/server/files/default/id_rsa
-cookbooks/server/files/default/id_rsa.pub
 .chef/
