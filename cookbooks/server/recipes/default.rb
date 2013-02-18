@@ -2,6 +2,7 @@ username = "varokas2"
 password = "$1$R8hQjBm4$lpvowSICZl5k/5VOxgnH10"
 user_home = "/home/#{username}"
 group = "sudo"
+uploader_group = "uploader"
 #####
 
 package "curl"
@@ -18,6 +19,11 @@ user username do
   home user_home 
   password password
   supports :manage_home => true
+end
+
+group "#{uploader_group}" do
+  append true
+  members "#{username}"
 end
 
 # Vim
@@ -87,6 +93,13 @@ template "#{node['nginx']['dir']}/sites-available/huskycode" do
       :root => "#{huskycode_root}"
   })
   notifies :reload, 'service[nginx]'
+end
+
+directory "#{huskycode_root}" do
+  owner username
+  group uploader_group
+  action :create
+  recursive true
 end
 
 nginx_site 'huskycode' do
