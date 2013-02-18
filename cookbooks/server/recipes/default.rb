@@ -46,7 +46,7 @@ end
 file "#{user_home}/.vimrc" do
   owner username
   group group
-  content "execute pathogen#infect()\nsyntax on\nfiletype plugin indent on\n"
+  content "execute pathogen#infect()\nsyntax on\n"
   action :create
 end
 
@@ -76,3 +76,25 @@ end
 service "jetty" do
   action :reload
 end
+
+#Huskycode
+huskycode_root = "/var/www/huskycode"
+
+template "#{node['nginx']['dir']}/sites-available/huskycode" do
+  source "huskycode-site.erb"
+  owner "root"
+  group "root"
+  mode 00644
+  variables({
+      :port => 81,
+      :root => "#{huskycode_root}"
+  })
+  notifies :reload, 'service[nginx]'
+end
+
+nginx_site 'huskycode' do
+  enable true 
+end
+
+# DO UFW Here !!
+
