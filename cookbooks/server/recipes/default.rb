@@ -139,6 +139,18 @@ template "/etc/haproxy/haproxy.cfg" do
   notifies :reload, "service[haproxy]"
 end
 
+#NodeJs
+apt_repository "nodejs" do
+  uri "http://ppa.launchpad.net/chris-lea/node.js/ubuntu/" 
+end
+
+#Foresee
+git "#{user_home}/foresee" do
+  user username
+  group uploader_group 
+  repository "https://github.com/huskycode/foresee"
+  reference "master"
+end
 
 # DO UFW Here !!
 
