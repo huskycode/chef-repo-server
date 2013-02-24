@@ -1,4 +1,4 @@
-username = "varokas2"
+username = "varokas"
 password = "$1$R8hQjBm4$lpvowSICZl5k/5VOxgnH10"
 user_home = "/home/#{username}"
 group = "sudo"
