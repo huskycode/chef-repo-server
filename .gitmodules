@@ -40,3 +40,6 @@
 [submodule "cookbooks/ufw"]
 	path = cookbooks/ufw
 	url = https://github.com/opscode-cookbooks/ufw.git
+[submodule "site-cookbooks/firewall"]
+	path = site-cookbooks/firewall
+	url = https://github.com/opscode-cookbooks/firewall.git

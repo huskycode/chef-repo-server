@@ -100,6 +100,17 @@ directory "/home/jetty" do
   recursive true
 end
 
+#for jenkins unix auth
+group "shadow" do
+  append true
+  members node["jetty"]["user"] 
+end
+
+group "root" do
+  append true
+  members node["jetty"]["user"] 
+end
+
 #Huskycode
 huskycode_root = "/var/www/huskycode"
 
