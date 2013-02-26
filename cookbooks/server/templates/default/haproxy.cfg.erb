@@ -33,5 +33,9 @@ backend huskycode
   server localhost 127.0.0.1:<%= @http_server_port %>
 
 backend jenkins
-  server localhost 127.0.0.1:<%= @jenkins_port %>/jenkins
+  mode http
+  option httpclose
+  reqrep ^([^\ ]*)\ /jenkins/(.*) \1\ /\2 
+  reqrep ^([^\ ]*)\ /(.*) \1\ /jenkins/\2 
+  server localhost 127.0.0.1:<%= @jenkins_port %>
 
