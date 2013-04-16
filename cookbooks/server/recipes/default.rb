@@ -103,6 +103,7 @@ remote_file "#{user_home}/TeamCity-7.1.4.tar.gz" do
   source "http://download.jetbrains.com/teamcity/TeamCity-7.1.4.tar.gz"
   owner username
   group group
+  action :create_if_missing
 end
 
 execute "tar" do
@@ -110,6 +111,7 @@ execute "tar" do
  group "root"
  command "tar zxf #{user_home}/TeamCity-7.1.4.tar.gz -C /var"
  action :run
+ not_if do FileTest.directory?("/var/TeamCity") end
 end
 
 cookbook_file "files/default/teamcity" do
@@ -126,6 +128,12 @@ execute "udate rc.d for teamcity" do
   group "root"
 end
 
+execute "start teamcity" do
+  command "service teamcity start"
+  user "root"
+  group "root"
+end
+
 #NodeJs
 apt_repository "nodejs" do
   uri "http://ppa.launchpad.net/chris-lea/node.js/ubuntu/" 
@@ -136,7 +144,6 @@ apt_repository "nodejs" do
 end
 ### TODO MAke this notifies only after successful apt-update
 package "nodejs"
-package "npm"
 
 #Foresee
 git "#{user_home}/foresee" do
