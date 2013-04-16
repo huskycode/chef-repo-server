@@ -24,6 +24,14 @@ Or, we can force update it by this command
     
     git submodule update --init
 
+Run
+---
+    #Make sure the package repo is up to date
+    sudo apt-get update
+    
+    #Run
+    ./run-solo
+
 Configure
 --- 
 
