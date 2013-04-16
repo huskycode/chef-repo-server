@@ -3,7 +3,7 @@ override['nginx']['default_site_enabled'] = false
 override['firewall']['rules'] = [
   {"http" => { "port" => "80" } },
   {"https" => { "port" => "443" } },
-  {"jetty" => { "port" => "8080" } },
+  {"teamcity" => { "port" => "8111" } },
   {"ssh" => { "port" => "22" } },
   {"foresee" => { "port" => "3000" } }
 ]
