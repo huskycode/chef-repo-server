@@ -1,5 +1,5 @@
 username = "varokas"
-password = "$1$R8hQjBm4$lpvowSICZl5k/5VOxgnH10"
+password = "$1$S8Ju2HIh$p9e50ZSxgtwn/8CTx3.kh/"
 user_home = "/home/#{username}"
 group = "sudo"
 uploader_group = "uploader"
@@ -43,7 +43,7 @@ end
 cookbook_file "files/default/id_rsa.pub" do
   owner username
   group group
-  path "#{user_home}/.ssh/id_rsa"
+  path "#{user_home}/.ssh/id_rsa.pub"
   action :create
 end
 # Vim
@@ -83,60 +83,6 @@ git "#{user_home}/.vim/bundle/nerdtree" do
   reference "master"
 end
 
-#Deployments
-remote_file "Jenkins" do
-  path "#{node["jetty"]["webapp_dir"]}/jenkins.war"
-  source "http://mirrors.jenkins-ci.org/war/latest/jenkins.war"
-  owner node["jetty"]["user"] 
-  group node["jetty"]["group"] 
-  action :create_if_missing
-  notifies :reload, 'service[jetty]'
-end
-
-directory "/home/jetty" do
-  owner node["jetty"]["user"]
-  group node["jetty"]["group"]
-  action :create
-  recursive true
-end
-
-#for jenkins unix auth
-group "shadow" do
-  append true
-  members node["jetty"]["user"] 
-end
-
-group "root" do
-  append true
-  members node["jetty"]["user"] 
-end
-
-#Huskycode
-huskycode_root = "/var/www/huskycode"
-
-template "#{node['nginx']['dir']}/sites-available/huskycode" do
-  source "huskycode-site.erb"
-  owner "root"
-  group "root"
-  mode 00644
-  variables({
-      :port => 81,
-      :root => "#{huskycode_root}"
-  })
-  notifies :reload, 'service[nginx]'
-end
-
-directory "#{huskycode_root}" do
-  owner username
-  group uploader_group
-  action :create
-  recursive true
-end
-
-nginx_site 'huskycode' do
-  enable true 
-end
-
 #Proxy
 template "/etc/haproxy/haproxy.cfg" do
   source "haproxy.cfg.erb"
@@ -144,10 +90,41 @@ template "/etc/haproxy/haproxy.cfg" do
   group "root"
   mode 00644
   variables({
-    :http_server_port => 81,
-    :jenkins_port => 8080
+    :foresee_port => 3000,
+    :teamcity_port => 8111
   })
   notifies :reload, "service[haproxy]"
+end
+
+#TeamCity
+package "openjdk-7-jdk"
+
+remote_file "#{user_home}/TeamCity-7.1.4.tar.gz" do
+  source "http://download.jetbrains.com/teamcity/TeamCity-7.1.4.tar.gz"
+  owner username
+  group group
+end
+
+execute "tar" do
+ user root
+ group root
+
+ command "tar zxf #{user_home}/TeamCity-7.1.4.tar.gz -C /var"
+ action :run
+end
+
+cookbook_file "files/default/teamcity" do
+  owner root
+  group root
+  mode 755
+  path "/etc/init.d/teamcity"
+  action :create
+end
+
+execute "udate rc.d for teamcity" do
+  command "update-rc.d teamcity defaults"
+  user root
+  group root
 end
 
 #NodeJs

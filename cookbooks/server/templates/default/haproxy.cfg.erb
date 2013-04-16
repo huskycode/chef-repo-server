@@ -12,30 +12,31 @@ defaults
   log     global
   mode    http
   option  httplog
+  option  http-server-close
   option  dontlognull
   retries 3
   option redispatch
   timeout connect 5s
   timeout client 50s
   timeout server 50s
-  balance  <%= node['haproxy']['balance_algorithm'] %>
+  balance  roundrobin
 
 # Set up application listeners here.
 
 frontend http
   maxconn 4000
-  bind 0.0.0.0:<%= node['haproxy']['incoming_port'] %>
-  acl is_jenkins hdr_dom(host) jenkins
-  use_backend jenkins if is_jenkins
+  bind 0.0.0.0:80
+  acl is_foresee hdr_dom(host) foresee
+  acl is_teamcity hdr_dom(host) teamcity
+  use_backend foresee if is_foresee
+  use_backend teamcity if is_teamcity
   default_backend huskycode
 
-backend huskycode 
-  server localhost 127.0.0.1:<%= @http_server_port %>
+backend huskycode
+  redirect location http://www.huskycode.com
 
-backend jenkins
-  mode http
-  option httpclose
-  reqrep ^([^\ ]*)\ /jenkins/(.*) \1\ /\2 
-  reqrep ^([^\ ]*)\ /(.*) \1\ /jenkins/\2 
-  server localhost 127.0.0.1:<%= @jenkins_port %>
+backend teamcity
+  server localhost 127.0.0.1:<%= node['teamcity_port'] %>
 
+backend foresee
+  server localhost 127.0.0.1:<%= node['foresee_port'] %>
