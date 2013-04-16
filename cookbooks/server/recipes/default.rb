@@ -106,16 +106,15 @@ remote_file "#{user_home}/TeamCity-7.1.4.tar.gz" do
 end
 
 execute "tar" do
- user root
- group root
-
+ user "root"
+ group "root"
  command "tar zxf #{user_home}/TeamCity-7.1.4.tar.gz -C /var"
  action :run
 end
 
 cookbook_file "files/default/teamcity" do
-  owner root
-  group root
+  owner "root"
+  group "root"
   mode 755
   path "/etc/init.d/teamcity"
   action :create
@@ -123,8 +122,8 @@ end
 
 execute "udate rc.d for teamcity" do
   command "update-rc.d teamcity defaults"
-  user root
-  group root
+  user "root"
+  group "root"
 end
 
 #NodeJs
