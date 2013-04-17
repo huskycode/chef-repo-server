@@ -36,7 +36,7 @@ backend huskycode
   redirect location http://www.huskycode.com
 
 backend teamcity
-  server localhost 127.0.0.1:<%= node['teamcity_port'] %>
+  server localhost 127.0.0.1:<%= @teamcity_port %>
 
 backend foresee
-  server localhost 127.0.0.1:<%= node['foresee_port'] %>
+  server localhost 127.0.0.1:<%= @foresee_port %>
