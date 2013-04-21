@@ -12,6 +12,10 @@ package "screen"
 package "openssh-server"
 package "git"
 
+package "firefox"
+package "xvfb"
+package "zip"
+
 # User 
 user username do
   gid group
