@@ -5,5 +5,6 @@ override['firewall']['rules'] = [
   {"https" => { "port" => "443" } },
   {"teamcity" => { "port" => "8111" } },
   {"ssh" => { "port" => "22" } },
-  {"foresee" => { "port" => "3000" } }
+  {"foresee" => { "port" => "3000" } },
+  {"foresee_qa" => { "port" => "3000" } }
 ]

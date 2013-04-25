@@ -163,11 +163,6 @@ template "/etc/init/foresee-qa.conf" do
   })
 end
 
-service "foresee-qa" do
-  supports :status => true, :restart => true
-  action [ :enable, :start ]
-end
-
 template "/etc/init/foresee.conf" do
   source "foresee-service.conf.erb"
   owner "root"
@@ -177,9 +172,4 @@ template "/etc/init/foresee.conf" do
     :path => "/opt/foresee/foresee",
     :logfile_name => "node-foresee.log"
   })
-end
-
-service "foresee" do
-  supports :status => true, :restart => true
-  action [ :enable, :start ]
 end
