@@ -12,5 +12,6 @@ env PORT=<%= @port %>
 
 script
   export HOME="/root"
+  chdir <%= @path %>
   exec /usr/bin/node <%= @path %>/app.js >> /var/log/<%= @logfile_name %> 2>&1
 end script
