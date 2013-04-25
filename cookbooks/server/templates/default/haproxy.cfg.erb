@@ -27,8 +27,10 @@ frontend http
   maxconn 4000
   bind 0.0.0.0:80
   acl is_foresee hdr_dom(host) foresee
+  acl is_foresee_qa hdr_dom(host) foresee_qa
   acl is_teamcity hdr_dom(host) teamcity
   use_backend foresee if is_foresee
+  use_backend foresee_qa if is_foresee_qa
   use_backend teamcity if is_teamcity
   default_backend huskycode
 
@@ -40,3 +42,6 @@ backend teamcity
 
 backend foresee
   server localhost 127.0.0.1:<%= @foresee_port %>
+
+backend foresee_qa
+  server localhost 127.0.0.1:<%= @foresee_qa_port %>

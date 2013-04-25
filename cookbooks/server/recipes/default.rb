@@ -9,6 +9,7 @@ package "curl"
 package "wget"
 package "finger"
 package "screen"
+package "tmux"
 package "openssh-server"
 package "git"
 
@@ -91,6 +92,7 @@ template "/etc/haproxy/haproxy.cfg" do
   mode 00644
   variables({
     :foresee_port => 3000,
+    :foresee_qa_port => 3001,
     :teamcity_port => 8111
   })
   notifies :reload, "service[haproxy]"
@@ -146,40 +148,34 @@ end
 package "nodejs"
 
 #Foresee
-git "#{user_home}/foresee" do
-  user username
-  group uploader_group 
-  repository "https://github.com/huskycode/foresee"
-  reference "master"
+template "/etc/init/foresee-qa.conf" do
+  source "foresee-service.conf.erb"
+  owner "root"
+  group "root"
+  variables({
+    :port => 3002,
+    :path => "/opt/foresee-qa/foresee",
+    :logfile_name => "node-foresee-qa.log"
+  })
 end
 
-execute "install_foresee" do
-  command "npm install"
-  cwd "#{user_home}/foresee"
-  environment ({'HOME' => user_home}) 
-  user username
-  group uploader_group 
+service "foresee-qa" do
+  supports :status => true, :restart => true
+  action [ :enable, :start ]
 end
 
-#global insatll should be done by root
-execute "install_forever" do
-  command "npm install forever -g"
-  cwd "#{user_home}/foresee"
-  environment ({'HOME' => user_home}) 
+template "/etc/init/foresee.conf" do
+  source "foresee-service.conf.erb"
+  owner "root"
+  group "root"
+  variables({
+    :port => 3000,
+    :path => "/opt/foresee/foresee",
+    :logfile_name => "node-foresee.log"
+  })
 end
 
-execute "stop_all_forever" do
-  command "forever stopall"
-  cwd "#{user_home}/foresee"
-  environment ({'HOME' => user_home}) 
-  user username
-  group uploader_group 
-end
-
-execute "run_forever" do
-  command "forever start app.js"
-  cwd "#{user_home}/foresee"
-  environment ({'HOME' => user_home}) 
-  user username
-  group uploader_group 
+service "foresee" do
+  supports :status => true, :restart => true
+  action [ :enable, :start ]
 end
